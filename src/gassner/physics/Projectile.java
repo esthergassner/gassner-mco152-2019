@@ -25,7 +25,7 @@ public class Projectile
 
     public double calcY()
     {
-        return Math.sin(Math.toRadians(degrees)) * velocity * time - 9.8 * .5 * Math.pow(time, 2);
+        return Math.sin(Math.toRadians(degrees)) * velocity * time - 9.8 * .5 * (time * time);
     }
 
     @Override
