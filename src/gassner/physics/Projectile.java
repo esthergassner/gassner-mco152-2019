@@ -1,4 +1,4 @@
-package com.company;
+package gassner.physics;
 
 public class Projectile
 {

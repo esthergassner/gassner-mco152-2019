@@ -1,4 +1,4 @@
-package com.company;
+package gassner.physics;
 
 import java.util.*;
 
