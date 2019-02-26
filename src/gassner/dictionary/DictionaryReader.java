@@ -18,6 +18,11 @@ public class DictionaryReader {
                 scanner.close();
         }
 
+        public DictionaryReader(ArrayList<String> words)
+        {
+            dictionary = words;
+        }
+
         public int size()
         {
             return dictionary.size();
@@ -30,12 +35,23 @@ public class DictionaryReader {
 
         public boolean isPalindrome(String word)
         {
-            //todo
-            return false;
+            String reversed = new StringBuilder(word).reverse().toString().toUpperCase();
+            char[] letters = word.toUpperCase().toCharArray();
+            char[] backwards = reversed.toCharArray();
+            for (int ix = 0; ix < letters.length; ++ix)
+            {
+                if(letters[ix] != backwards[ix]) return false;
+            }
+            return true;
         }
 
         public List<String> getPalindromes()
         {
-            return null;
+            ArrayList<String> palindromes = new ArrayList<>();
+            for (String word : dictionary)
+            {
+                if(isPalindrome(word)) palindromes.add(word);
+            }
+            return palindromes;
         }
 }
