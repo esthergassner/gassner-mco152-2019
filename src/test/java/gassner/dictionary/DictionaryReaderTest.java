@@ -1,11 +1,11 @@
 package gassner.dictionary;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class DictionaryReaderTest {
 
@@ -73,12 +73,12 @@ public class DictionaryReaderTest {
     public void getPalindromes()
     {
         //given
-        ArrayList<String> wordList = new ArrayList<>();
+        ArrayList<String> wordList = new ArrayList<String>();
         wordList.add("racecar");
         wordList.add("esther");
         wordList.add("KayAk");
         DictionaryReader dictionary = new DictionaryReader(wordList);
-        ArrayList<String> expectedPalindromes = new ArrayList<>();
+        ArrayList<String> expectedPalindromes = new ArrayList<String>();
         expectedPalindromes.add("racecar");
         expectedPalindromes.add("KayAk");
         //when
