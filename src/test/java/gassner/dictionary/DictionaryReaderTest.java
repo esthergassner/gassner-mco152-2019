@@ -16,7 +16,7 @@ public class DictionaryReaderTest {
 
         //when
         //then
-        assertTrue(dictionary.checkIfPresent("WONDERFUL"));
+        assertTrue(dictionary.contains("WONDERFUL"));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class DictionaryReaderTest {
 
         //when
         //then
-        assertFalse(dictionary.checkIfPresent("gassner"));
+        assertFalse(dictionary.contains("gassner"));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class DictionaryReaderTest {
 
         //when
         //then
-        assertTrue(dictionary.checkIfPresent("WoNdErFuL"));
+        assertTrue(dictionary.contains("WoNdErFuL"));
     }
 
     @Test

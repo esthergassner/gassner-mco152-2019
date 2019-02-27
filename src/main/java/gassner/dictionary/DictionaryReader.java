@@ -28,21 +28,15 @@ public class DictionaryReader {
             return dictionary.size();
         }
 
-        public boolean checkIfPresent(String word)
+        public boolean contains(String word)
         {
             return dictionary.contains(word.toUpperCase());
         }
 
         public boolean isPalindrome(String word)
         {
-            String reversed = new StringBuilder(word).reverse().toString().toUpperCase();
-            char[] letters = word.toUpperCase().toCharArray();
-            char[] backwards = reversed.toCharArray();
-            for (int ix = 0; ix < letters.length; ++ix)
-            {
-                if(letters[ix] != backwards[ix]) return false;
-            }
-            return true;
+            String reversed = new StringBuilder(word).reverse().toString();
+            return word.equalsIgnoreCase(reversed);
         }
 
         public List<String> getPalindromes()
@@ -50,7 +44,10 @@ public class DictionaryReader {
             ArrayList<String> palindromes = new ArrayList<>();
             for (String word : dictionary)
             {
-                if(isPalindrome(word)) palindromes.add(word);
+                if(isPalindrome(word))
+                {
+                    palindromes.add(word);
+                }
             }
             return palindromes;
         }
