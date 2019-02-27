@@ -23,6 +23,11 @@ public class DictionaryReader {
             dictionary = words;
         }
 
+        public ArrayList<String> getList()
+        {
+            return dictionary;
+        }
+
         public int size()
         {
             return dictionary.size();
@@ -31,24 +36,5 @@ public class DictionaryReader {
         public boolean contains(String word)
         {
             return dictionary.contains(word.toUpperCase());
-        }
-
-        public boolean isPalindrome(String word)
-        {
-            String reversed = new StringBuilder(word).reverse().toString();
-            return word.equalsIgnoreCase(reversed);
-        }
-
-        public List<String> getPalindromes()
-        {
-            ArrayList<String> palindromes = new ArrayList<>();
-            for (String word : dictionary)
-            {
-                if(isPalindrome(word))
-                {
-                    palindromes.add(word);
-                }
-            }
-            return palindromes;
         }
 }
