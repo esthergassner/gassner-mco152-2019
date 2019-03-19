@@ -5,28 +5,48 @@ import java.util.List;
 
 public class Bananagrams
 {
-    public boolean wordIsPresent(ArrayList<String> letters, String word)
+    private DictionaryReader dictionary;
+
+    public Bananagrams(DictionaryReader dictionary)
     {
-        boolean isPresent = false;
-        ArrayList<String> tempLetterList = letters;
+        this.dictionary = dictionary;
+    }
+
+    /**
+     *
+     * @param letters pool of letters
+     * @param word word being checked
+     * @return a boolean value telling whether the word is present
+     */
+    public boolean wordIsPresent(List<String> letters, String word)
+    {
+        ArrayList<String> tempLetterList = new ArrayList<>();
+        for (String str : letters) {
+            tempLetterList.add(str);
+        }
 
         StringBuilder wordPresent = new StringBuilder();
          for (String letter : word.split(""))
             {
-                if (letters.contains(letter))
+                if (tempLetterList.contains(letter))
                 {
                     wordPresent.append(letter);
                     tempLetterList.remove(letter);
                     if (wordPresent.toString().contentEquals(word))
                     {
-                        isPresent = true;
+                        return true;
                     }
                 }
             }
-         return isPresent;
+         return false;
     }
 
-    public ArrayList<String> getWordsPresent(ArrayList<String> letters, DictionaryReader dictionary)
+    /**
+     *
+     * @param letters pool of letters
+     * @return a list of words in the DictionaryReader that are a subset of these letters
+     */
+    public ArrayList<String> getWordsPresent(List<String> letters)
     {
         ArrayList<String> wordsPresent = new ArrayList<>();
         for (String word : dictionary.getList())
