@@ -15,26 +15,8 @@ public class GolfFrame extends JFrame
         JPanel root = new JPanel();
         root.setLayout(new BorderLayout());
 
-        JLabel north = new JLabel(new ImageIcon("mario.jpg"));
-        root.add(north, BorderLayout.NORTH);
-
-        JLabel south = new JLabel("SOUTH");
-        south.setBackground(Color.MAGENTA);
-        root.add(south, BorderLayout.SOUTH);
-        south.setOpaque(true);
-
-        JLabel west = new JLabel("WEST");
-        west.setBackground(Color.CYAN);
-        root.add(west, BorderLayout.WEST);
-        west.setOpaque(true);
-
-        JButton center = new JButton("CENTER");
-        center.setBackground(Color.LIGHT_GRAY);
-        center.setOpaque(true);
-
-        center.addActionListener(this::printClick);
-
-        root.add(center, BorderLayout.CENTER);
+        GolfCourseComponent golfCourseComponent = new GolfCourseComponent();
+        root.add(golfCourseComponent, BorderLayout.CENTER);
 
         setContentPane(root);
     }
