@@ -11,6 +11,7 @@ public class GolfCourseComponent extends JComponent
     private double cloudMovement = 0.0;
     private Image cloud1 = new ImageIcon("cloud.png").getImage();
     private Image cloud2 = new ImageIcon("cloud2.png").getImage();
+    private Image ballImage = new ImageIcon("golfBall.png").getImage();
 
     @Override
     protected void paintComponent(Graphics graphics)
@@ -72,8 +73,7 @@ public class GolfCourseComponent extends JComponent
     {
         double y = ball.calcY();
         double x = ball.calcX();
-        ImageIcon ballImage = new ImageIcon("golfBall.png");
-        graphics.drawImage(ballImage.getImage(), (int) (ball_start_x + x), (int) ((groundHeight - 25) - y), null);
+        graphics.drawImage(ballImage, (int) (ball_start_x + x), (int) ((groundHeight - 25) - y), null);
         // enter values 90 and 60.1 to make this happen
         if ((int)(ball_start_x + x) == flagpole_location)
         {
