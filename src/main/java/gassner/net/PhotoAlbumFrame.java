@@ -12,6 +12,7 @@ public class PhotoAlbumFrame extends JFrame
     private int photoNumber;
     private final JLabel numLabel;
     private final JLabel picLabel;
+    private final JList<String> titleList;
     private PhotoList list;
     private Photo photo;
 
@@ -26,11 +27,24 @@ public class PhotoAlbumFrame extends JFrame
                 );
 
         setTitle("Photo Album");
-        setSize(1000, 1000);
+        setSize(2000, 1500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JPanel root = new JPanel();
         root.setLayout(new BorderLayout());
+
+        titleList = new JList<>();
+        String[] titles = new String[list.size()];
+        for (int ix = 0; ix < list.size(); ix++) {
+            titles[ix] = list.get(ix).getTitle();
+        }
+        titleList.setListData(titles);
+        titleList.addListSelectionListener(e -> {
+                photoNumber = titleList.getSelectedIndex();
+                setPhoto();
+                updatePhotoNumber();
+        });
+        JScrollPane scrollPane = new JScrollPane(titleList);
 
         picLabel = new JLabel();
         photo = list.get(photoNumber);
@@ -57,8 +71,8 @@ public class PhotoAlbumFrame extends JFrame
         controlPanel.add(prev);
         controlPanel.add(numLabel);
         controlPanel.add(next);
-
         root.add(picLabel, BorderLayout.CENTER);
+        root.add(scrollPane, BorderLayout.EAST);
         root.add(controlPanel, BorderLayout.SOUTH);
 
         setContentPane(root);
