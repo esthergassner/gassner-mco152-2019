@@ -11,8 +11,8 @@ public class PhotoAlbumFrame extends JFrame
 {
     private int photoNumber;
     private final JLabel numLabel;
-    private final JLabel picLabel;
-    private final JList<String> titleList;
+    private JLabel picLabel;
+    private JList<String> titleList;
     private PhotoList list;
     private Photo photo;
 
@@ -33,6 +33,34 @@ public class PhotoAlbumFrame extends JFrame
         JPanel root = new JPanel();
         root.setLayout(new BorderLayout());
 
+        JScrollPane listScrollPane = setUpScrollPane();
+        setUpPicLabel();
+        JButton prev = setupPrev();
+        JButton next = setupNext();
+        numLabel = new JLabel("#" + (photoNumber + 1));
+
+        JPanel controlPanel = new JPanel();
+
+        controlPanel.add(prev);
+        controlPanel.add(numLabel);
+        controlPanel.add(next);
+        root.add(picLabel, BorderLayout.CENTER);
+        root.add(listScrollPane, BorderLayout.EAST);
+        root.add(controlPanel, BorderLayout.SOUTH);
+
+        setContentPane(root);
+
+    }
+
+    private void setUpPicLabel() throws MalformedURLException
+    {
+        picLabel = new JLabel();
+        photo = list.get(photoNumber);
+        picLabel.setIcon(new ImageIcon(new URL(photo.getUrl())));
+    }
+
+    private JScrollPane setUpScrollPane()
+    {
         titleList = new JList<>();
         String[] titles = new String[list.size()];
         for (int ix = 0; ix < list.size(); ix++) {
@@ -40,17 +68,27 @@ public class PhotoAlbumFrame extends JFrame
         }
         titleList.setListData(titles);
         titleList.addListSelectionListener(e -> {
-                photoNumber = titleList.getSelectedIndex();
-                setPhoto();
-                updatePhotoNumber();
+            photoNumber = titleList.getSelectedIndex();
+            setPhoto();
+            updatePhotoNumber();
         });
         JScrollPane scrollPane = new JScrollPane(titleList);
+        return scrollPane;
+    }
 
-        picLabel = new JLabel();
-        photo = list.get(photoNumber);
-        picLabel.setIcon(new ImageIcon(new URL(photo.getUrl())));
+    private JButton setupNext()
+    {
+        JButton next = new JButton("NEXT");
+        next.addActionListener(e -> {
+            photoNumber++;
+            setPhoto();
+            updatePhotoNumber();
+        });
+        return next;
+    }
 
-        numLabel = new JLabel("#" + (photoNumber + 1));
+    private JButton setupPrev()
+    {
         JButton prev = new JButton("PREV");
         prev.addActionListener(e -> {
             if (photoNumber > 0) {
@@ -59,23 +97,7 @@ public class PhotoAlbumFrame extends JFrame
                 updatePhotoNumber();
             }
         });
-        JButton next = new JButton("NEXT");
-        next.addActionListener(e -> {
-            photoNumber++;
-            setPhoto();
-            updatePhotoNumber();
-        });
-
-        JPanel controlPanel = new JPanel();
-
-        controlPanel.add(prev);
-        controlPanel.add(numLabel);
-        controlPanel.add(next);
-        root.add(picLabel, BorderLayout.CENTER);
-        root.add(scrollPane, BorderLayout.EAST);
-        root.add(controlPanel, BorderLayout.SOUTH);
-
-        setContentPane(root);
+        return prev;
     }
 
     private void setPhoto()
