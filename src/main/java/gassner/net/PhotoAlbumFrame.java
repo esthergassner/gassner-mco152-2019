@@ -1,6 +1,9 @@
 package gassner.net;
 
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import org.apache.commons.lang3.time.StopWatch;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,12 +22,19 @@ public class PhotoAlbumFrame extends JFrame
     public PhotoAlbumFrame() throws MalformedURLException
     {
         JsonPlaceholderClient client = new JsonPlaceholderClient();
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         Disposable disposable = client.getPhotoList()
-                .subscribe(photoList -> {
-                        System.out.println(photoList);
-                        list = photoList;
-                    }
-                );
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.trampoline())
+            .subscribe(photoList -> {
+                list = photoList;
+                showPhotoList();
+                photo = list.get(photoNumber);
+                picLabel.setIcon(new ImageIcon(new URL(photo.getUrl())));
+            });
+        stopWatch.stop();
+        System.out.println(stopWatch.getTime());
 
         setTitle("Photo Album");
         setSize(2000, 1500);
@@ -55,18 +65,11 @@ public class PhotoAlbumFrame extends JFrame
     private void setUpPicLabel() throws MalformedURLException
     {
         picLabel = new JLabel();
-        photo = list.get(photoNumber);
-        picLabel.setIcon(new ImageIcon(new URL(photo.getUrl())));
     }
 
     private JScrollPane setUpScrollPane()
     {
         titleList = new JList<>();
-        String[] titles = new String[list.size()];
-        for (int ix = 0; ix < list.size(); ix++) {
-            titles[ix] = list.get(ix).getTitle();
-        }
-        titleList.setListData(titles);
         titleList.addListSelectionListener(e -> {
             photoNumber = titleList.getSelectedIndex();
             setPhoto();
@@ -74,6 +77,14 @@ public class PhotoAlbumFrame extends JFrame
         });
         JScrollPane scrollPane = new JScrollPane(titleList);
         return scrollPane;
+    }
+
+    private void showPhotoList() {
+        String[] titles = new String[list.size()];
+        for (int ix = 0; ix < list.size(); ix++) {
+            titles[ix] = list.get(ix).getTitle();
+        }
+        titleList.setListData(titles);
     }
 
     private JButton setupNext()
